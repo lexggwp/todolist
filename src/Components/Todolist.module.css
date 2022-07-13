@@ -4,7 +4,9 @@
 .activeFilter {
     background: aquamarine;
 }
-
 .isDone {
     opacity: 0.5;
+}
+.error {
+    border: 5px solid red;
 }

@@ -4,6 +4,7 @@ import Button from "./Button";
 import Input from "./Input";
 import style from "./Todolist.module.css";
 
+
 type TaskType = {
     id: string
     title: string
@@ -13,15 +14,12 @@ type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: string) => void
-    changeFilter: (filterName: FilterValuesType) => void
-    addTask: (newTitle: string) => void;
-    changeIsDone: (id: string, value: boolean) => void;
+    removeTask: (todolistID: string, taskId: string) => void
+    changeFilter: (todolistID: string, filterName: FilterValuesType) => void
+    addTask: (todolistID: string, newTitle: string) => void;
+    changeIsDone: (todolistID: string, id: string, value: boolean) => void;
     filter: FilterValuesType;
     todolistID: string;
-
-
-
 }
 
 function Todolist(props: PropsType) {
@@ -30,22 +28,22 @@ function Todolist(props: PropsType) {
 
     const addTaskHandler = () => {
         if (newTitle.trim().length) {
-            props.addTask(newTitle)
+            props.addTask(props.todolistID, newTitle)
             setNewTitle('');
         } else {
             setError('Title is required')
         }
     }
-    const onClickFilterHandler = (FilterName: FilterValuesType) => props.changeFilter(FilterName);
+    const onClickFilterHandler = (FilterName: FilterValuesType) => props.changeFilter(props.todolistID, FilterName);
 
 
     const [newTitle, setNewTitle] = useState('');
 
     const onClickDeleteTask = (id: string) => {
-        props.removeTask(id)
+        props.removeTask(props.todolistID, id)
     }
-    const onChangeHandler = (tID: string, value: boolean ) => {
-        props.changeIsDone(tID, value)
+    const onChangeHandler = (id: string, value: boolean ) => {
+        props.changeIsDone(props.todolistID, id, value)
     }
 
     return <div>

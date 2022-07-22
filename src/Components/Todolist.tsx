@@ -20,6 +20,7 @@ type PropsType = {
     changeIsDone: (todolistID: string, id: string, value: boolean) => void;
     filter: FilterValuesType;
     todolistID: string;
+    deleteTodolist: (todolistID: string) => void;
 }
 
 function Todolist(props: PropsType) {
@@ -45,9 +46,14 @@ function Todolist(props: PropsType) {
     const onChangeHandler = (id: string, value: boolean ) => {
         props.changeIsDone(props.todolistID, id, value)
     }
+    const onClickDeleteTodolist = () => {
+        props.deleteTodolist(props.todolistID);
+    }
 
     return <div>
-        <h3>{props.title}</h3>
+        <h3>{props.title}
+        <Button name={'x'} callback={onClickDeleteTodolist}/>
+        </h3>
         <Input setError={setError} error={error} callBack={addTaskHandler} title={newTitle} setNewTitle={setNewTitle}/>
         <Button name={'+'} callback={addTaskHandler}/>
         {error && <div className={style.errorMessage}>{error}</div>}

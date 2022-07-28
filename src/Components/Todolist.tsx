@@ -3,11 +3,12 @@ import {FilterValuesType} from '../App';
 import Button from "./Button";
 import style from "./Todolist.module.css";
 import AddItemForm from "./AddItemForm";
+import EditableSpan from "./EditableSpan";
 
 
 type TaskType = {
     id: string
-    title: string
+    inputValue: string
     isDone: boolean
 }
 
@@ -21,7 +22,7 @@ type PropsType = {
     filter: FilterValuesType;
     todolistID: string;
     deleteTodolist: (todolistID: string) => void;
-
+    changeTaskInputValue: (todolistId: string, taskId: string, inputValue: string) => void;
 }
 
 function Todolist(props: PropsType) {
@@ -55,6 +56,8 @@ function Todolist(props: PropsType) {
     }
 
 
+
+
     return <div>
         <h3>{props.title}
             <Button name={'x'} callback={onClickDeleteTodolist}/>
@@ -67,11 +70,14 @@ function Todolist(props: PropsType) {
         <ul>
             {
                 props.tasks.map(t => {
+                    const changeTaskInputValueHandler = (inputValue: string) => {
+                        props.changeTaskInputValue(props.todolistID, t.id, inputValue)
+                    }
                     return (
                         <li className={t.isDone ? style.isDone : ''} key={t.id}>
                             <input onChange={(event) => onChangeHandler(t.id, event.currentTarget.checked)}
                                    type="checkbox" checked={t.isDone}/>
-                            <span>{t.title}</span>
+                            <EditableSpan changeTaskInputValue={changeTaskInputValueHandler} inputValue={t.inputValue}/>
                             <Button name={'x'} callback={() => onClickDeleteTask(t.id)}/>
                         </li>
                     )

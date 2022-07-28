@@ -11,7 +11,7 @@ type AddItemFormPropsType = {
 const AddItemForm = (props: AddItemFormPropsType) => {
     const [error, setError] = useState<string>('')
     const [inputValue, setInputValue] = useState('');
-    const addTaskHandler = () => {
+    const AddItem = () => {
         if (inputValue.trim().length) {
             props.addItem(inputValue)
             setInputValue('');
@@ -21,8 +21,8 @@ const AddItemForm = (props: AddItemFormPropsType) => {
     }
     return (
         <div>
-            <Input setError={setError} error={error} onEnter={addTaskHandler} title={inputValue} setNewTitle={setInputValue}/>
-            <Button name={'+'} callback={addTaskHandler}/>
+            <Input setError={setError} error={error} onEnter={AddItem} title={inputValue} setNewTitle={setInputValue}/>
+            <Button name={'+'} callback={AddItem}/>
             {error && <div className={style.errorMessage}>{error}</div>}
         </div>
     );

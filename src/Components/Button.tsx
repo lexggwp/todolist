@@ -11,11 +11,11 @@ type ButtonPropsType = {
 
 const Button = (props: ButtonPropsType) => {
 
-    const OnAllClickHandler = () => {
+    const onClickHandler = () => {
         props.callback()
     }
     return (
-           <button className={props.style} onClick={OnAllClickHandler}>{props.name}</button>
+           <button className={props.style} onClick={onClickHandler}>{props.name}</button>
     );
 };
 

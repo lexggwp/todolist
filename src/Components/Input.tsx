@@ -4,14 +4,12 @@ import style from './Input.module.css'
 type InputPropsType = {
     setNewTitle: (title: string) => void,
     title: string;
-    callBack: () => void
+    onEnter: () => void
     error: string;
     setError: (error: string) => void;
 }
 
 const Input = (props: InputPropsType) => {
-
-
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.setError('')
@@ -19,16 +17,15 @@ const Input = (props: InputPropsType) => {
     }
     const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            props.callBack();
+            props.onEnter();
         }
     }
     return (
         <>
-        <input className={props.error ?style.error: ''} onKeyDown={onKeyPressHandler}
-               value={props.title}
-               onChange={onChangeHandler}/>
-
-
+            <input className={props.error ? style.error : ''}
+                   onKeyDown={onKeyPressHandler}
+                   value={props.title}
+                   onChange={onChangeHandler}/>
         </>
     );
 };

@@ -2,6 +2,13 @@ import React, {useState} from 'react';
 import './App.css';
 import Todolist from "./Components/Todolist";
 import {v1} from "uuid";
+import AddItemForm from "./Components/AddItemForm";
+
+
+//storybook
+//...spread
+//<>
+
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistsType = {
@@ -9,6 +16,7 @@ export type TodolistsType = {
     title: string,
     filter: FilterValuesType
 }
+
 
 function App() {
 
@@ -60,9 +68,16 @@ function App() {
         setTodolists(todolists.filter( el => el.id !== todolistID))
         delete tasks[todolistID];
     }
+    function addTodolist (inputValue: string) {
+        const newTodolist: TodolistsType = {id: v1(), title: inputValue, filter: 'all'};
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [newTodolist.id]: []})
+    }
 
     return (
+
         <div className="App">
+            <AddItemForm addItem={addTodolist}/>
             {todolists.map ( el => {
                 let tasksForTodolist = tasks[el.id];
                 if (el.filter === "active") {
@@ -73,6 +88,7 @@ function App() {
                 }
                 return (
                     <Todolist
+                        addTodolist={addTodolist}
                         key={el.id}
                         todolistID={el.id}
                         filter={el.filter}
@@ -82,17 +98,10 @@ function App() {
                         removeTask={removeTask}
                         changeFilter={changeFilter}
                         addTask={addTask}
-                        deleteTodolist={deleteTodolist}
-                    />
-
+                        deleteTodolist={deleteTodolist}/>
                 )
             })}
-
         </div>
     );
 }
-
-
-
-
 export default App;

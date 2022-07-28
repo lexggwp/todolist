@@ -21,7 +21,7 @@ type PropsType = {
     filter: FilterValuesType;
     todolistID: string;
     deleteTodolist: (todolistID: string) => void;
-    addTodolist: (inputValue: string) => void;
+
 }
 
 function Todolist(props: PropsType) {

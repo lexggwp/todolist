@@ -78,6 +78,9 @@ function App() {
     function changeTaskInputValue (todolistId: string, taskId: string, inputValue: string) {
         setTasks({...tasks, [todolistId]:tasks[todolistId].map(el => el.id === taskId ? {...el, inputValue: inputValue}: el)})
     }
+    function changeTodolistTitle (todolistId: string, title: string) {
+        setTodolists(todolists.map(el => el.id === todolistId ? {...el, title: title}: el));
+    }
 
     return (
 
@@ -104,6 +107,7 @@ function App() {
                         addTask={addTask}
                         deleteTodolist={deleteTodolist}
                         changeTaskInputValue={changeTaskInputValue}
+                        changeTodolistTitle={changeTodolistTitle}
                     />
                 )
             })}

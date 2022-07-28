@@ -23,6 +23,7 @@ type PropsType = {
     todolistID: string;
     deleteTodolist: (todolistID: string) => void;
     changeTaskInputValue: (todolistId: string, taskId: string, inputValue: string) => void;
+    changeTodolistTitle: (todolistId: string, title: string) => void;
 }
 
 function Todolist(props: PropsType) {
@@ -54,12 +55,16 @@ function Todolist(props: PropsType) {
         props.addTask(props.todolistID, inputValue)
 
     }
+    const changeTodolistTitleHandler = (title: string) => {
+        props.changeTodolistTitle(props.todolistID, title)
+    }
 
 
 
 
     return <div>
-        <h3>{props.title}
+        <h3>
+            <EditableSpan inputValue={props.title} changeTaskInputValue={changeTodolistTitleHandler}/>
             <Button name={'x'} callback={onClickDeleteTodolist}/>
         </h3>
         {/*<Input setError={setError} error={error} onEnter={addTaskHandler} title={inputValue} setNewTitle={setInputValue}/>*/}

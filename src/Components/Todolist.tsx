@@ -1,9 +1,10 @@
 import React from 'react';
 import {FilterValuesType} from '../App';
-import Button from "./Button";
 import style from "./Todolist.module.css";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
+import {Button, IconButton} from '@mui/material';
+import {Delete} from "@mui/icons-material";
 
 
 type TaskType = {
@@ -28,50 +29,32 @@ type PropsType = {
 
 function Todolist(props: PropsType) {
 
-    // const [error, setError] = useState<string>('')
-    // const [inputValue, setInputValue] = useState('');
-
-    // const addTaskHandler = () => {
-    //     if (inputValue.trim().length) {
-    //         props.addTask(props.todolistID, inputValue)
-    //         setInputValue('');
-    //     } else {
-    //         setError('Title is required')
-    //     }
-    // }
     const onClickFilterHandler = (FilterName: FilterValuesType) => props.changeFilter(props.todolistID, FilterName);
-
-
     const onClickDeleteTask = (id: string) => {
         props.removeTask(props.todolistID, id)
     }
+
     const onChangeHandler = (id: string, value: boolean) => {
         props.changeIsDone(props.todolistID, id, value)
     }
+
     const onClickDeleteTodolist = () => {
         props.deleteTodolist(props.todolistID);
     }
+
     const addTaskHandler = (inputValue: string) => {
         props.addTask(props.todolistID, inputValue)
-
     }
+
     const changeTodolistTitleHandler = (title: string) => {
         props.changeTodolistTitle(props.todolistID, title)
     }
-
-
-
-
     return <div>
         <h3>
             <EditableSpan inputValue={props.title} changeTaskInputValue={changeTodolistTitleHandler}/>
-            <Button name={'x'} callback={onClickDeleteTodolist}/>
+            <IconButton onClick={onClickDeleteTodolist}><Delete/></IconButton>
         </h3>
-        {/*<Input setError={setError} error={error} onEnter={addTaskHandler} title={inputValue} setNewTitle={setInputValue}/>*/}
-        {/*<Button name={'+'} callback={addTaskHandler}/>*/}
-        {/*{error && <div className={style.errorMessage}>{error}</div>}*/}
         <AddItemForm addItem={addTaskHandler}/>
-
         <ul>
             {
                 props.tasks.map(t => {
@@ -83,19 +66,19 @@ function Todolist(props: PropsType) {
                             <input onChange={(event) => onChangeHandler(t.id, event.currentTarget.checked)}
                                    type="checkbox" checked={t.isDone}/>
                             <EditableSpan changeTaskInputValue={changeTaskInputValueHandler} inputValue={t.inputValue}/>
-                            <Button name={'x'} callback={() => onClickDeleteTask(t.id)}/>
+                            <IconButton onClick={() => onClickDeleteTask(t.id)}><Delete/></IconButton>
                         </li>
                     )
                 })
             }
         </ul>
         <div>
-            <Button style={props.filter === 'all' ? style.activeFilter : ''} name={'All'}
-                    callback={() => onClickFilterHandler('all')}/>
-            <Button style={props.filter === 'active' ? style.activeFilter : ''} name={'Active'}
-                    callback={() => onClickFilterHandler('active')}/>
-            <Button style={props.filter === 'completed' ? style.activeFilter : ''} name={'Completed'}
-                    callback={() => onClickFilterHandler('completed')}/>
+            <Button variant={props.filter === 'all' ? "contained": "outlined"}
+                    onClick={() => onClickFilterHandler('all')}>All</Button>
+            <Button variant={props.filter === 'active' ? "contained": "outlined"}
+                    onClick={() => onClickFilterHandler('active')}>Active</Button>
+            <Button variant={props.filter === 'completed' ? "contained": "outlined"}
+                    onClick={() => onClickFilterHandler('completed')}>Completed</Button>
         </div>
     </div>
 }

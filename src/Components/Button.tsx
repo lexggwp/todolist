@@ -4,11 +4,7 @@ type ButtonPropsType = {
     name: string,
     callback: () => void;
     style?: string;
-
 }
-
-
-
 const Button = (props: ButtonPropsType) => {
 
     const onClickHandler = () => {

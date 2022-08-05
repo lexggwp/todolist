@@ -3,7 +3,7 @@ import {FilterValuesType} from '../App';
 import style from "./Todolist.module.css";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, IconButton} from '@mui/material';
+import {Button, Checkbox, IconButton} from '@mui/material';
 import {Delete} from "@mui/icons-material";
 
 
@@ -63,8 +63,8 @@ function Todolist(props: PropsType) {
                     }
                     return (
                         <li className={t.isDone ? style.isDone : ''} key={t.id}>
-                            <input onChange={(event) => onChangeHandler(t.id, event.currentTarget.checked)}
-                                   type="checkbox" checked={t.isDone}/>
+                            <Checkbox color="success" onChange={(event) => onChangeHandler(t.id, event.currentTarget.checked)}
+                                      checked={t.isDone} />
                             <EditableSpan changeTaskInputValue={changeTaskInputValueHandler} inputValue={t.inputValue}/>
                             <IconButton onClick={() => onClickDeleteTask(t.id)}><Delete/></IconButton>
                         </li>

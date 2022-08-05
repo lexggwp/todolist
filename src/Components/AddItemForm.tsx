@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Input from "./Input";
-import Button from "./Button";
-import style from "./Todolist.module.css";
+import {Button} from "@mui/material";
 
 type AddItemFormPropsType = {
     addItem: (inputValue: string) => void;
@@ -22,8 +21,7 @@ const AddItemForm = (props: AddItemFormPropsType) => {
     return (
         <div>
             <Input setError={setError} error={error} onEnter={AddItem} title={inputValue} setNewTitle={setInputValue}/>
-            <Button name={'+'} callback={AddItem}/>
-            {error && <div className={style.errorMessage}>{error}</div>}
+            <Button size="large" variant="contained" onClick={AddItem}>+</Button>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './Input.module.css'
+import {TextField} from "@mui/material";
 
 type InputPropsType = {
     setNewTitle: (title: string) => void,
@@ -22,11 +22,16 @@ const Input = (props: InputPropsType) => {
     }
     return (
         <>
-            <input className={props.error ? style.error : ''}
-                   onKeyDown={onKeyPressHandler}
-                   value={props.title}
-                   onChange={onChangeHandler}/>
+            <TextField style={ {marginRight: '5px'}} error={!!props.error}
+                       size="small"
+                       onKeyDown={onKeyPressHandler}
+                       value={props.title}
+                       onChange={onChangeHandler}
+                       id="outlined-basic"
+                       label={props.error ? 'Invalid text!': 'Put a text'}
+                       variant="outlined" />
         </>
+
     );
 };
 

@@ -2,9 +2,9 @@ import React from 'react';
 import {TextField} from "@mui/material";
 
 type InputPropsType = {
-    setNewTitle: (title: string) => void,
+    setInputValue: (title: string) => void,
     title: string;
-    onEnter: () => void
+    addItem: () => void
     error: string;
     setError: (error: string) => void;
 }
@@ -13,11 +13,11 @@ const Input = (props: InputPropsType) => {
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.setError('')
-        props.setNewTitle(event.currentTarget.value)
+        props.setInputValue(event.currentTarget.value)
     }
     const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            props.onEnter();
+            props.addItem();
         }
     }
     return (

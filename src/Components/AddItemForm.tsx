@@ -20,7 +20,7 @@ const AddItemForm = (props: AddItemFormPropsType) => {
     }
     return (
         <div>
-            <Input setError={setError} error={error} onEnter={AddItem} title={inputValue} setNewTitle={setInputValue}/>
+            <Input setError={setError} error={error} addItem={AddItem} title={inputValue} setInputValue={setInputValue}/>
             <Button size="large" variant="contained" onClick={AddItem}>+</Button>
         </div>
     );

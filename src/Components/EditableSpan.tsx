@@ -18,13 +18,13 @@ const EditableSpan = (props: EditableSpanPropsType) => {
         setEditView(!editView);
         if (editView && inputValue !== props.inputValue && inputValue.length) {
             props.changeTaskInputValue(inputValue);
-        } else setInputValue(props.inputValue);
+        } else
+            setInputValue(props.inputValue)
     }
 
     return (
-        editView ? <TextField variant={'standard'} onChange={onChangeHandler} onBlur={toggleMode} value={inputValue}
-                              autoFocus/> :
-            <span onDoubleClick={toggleMode}>{props.inputValue}</span>
+        editView ?  <TextField variant={'standard'} onChange={onChangeHandler} onBlur={toggleMode} value={inputValue} autoFocus/> :
+            <span onDoubleClick={toggleMode} >{props.inputValue}</span>
     );
 };
 

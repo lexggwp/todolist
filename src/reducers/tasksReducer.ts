@@ -5,11 +5,13 @@ type RemoveTaskACType = ReturnType<typeof removeTaskAC>
 type ChangeStatusTaskACType = ReturnType<typeof changeStatusTaskAC>
 type addTaskACType = ReturnType<typeof addTaskAC>
 type ChangeTaskInputValueACType = ReturnType<typeof changeTaskInputValueAC>
+type AddTodolistHelperACType = ReturnType<typeof addTodolistHelperAC>
 
 
 
 
-type ActionType = RemoveTaskACType | ChangeStatusTaskACType | addTaskACType | ChangeTaskInputValueACType
+type ActionType = RemoveTaskACType | ChangeStatusTaskACType | addTaskACType |
+    ChangeTaskInputValueACType | AddTodolistHelperACType
 
 export const tasksReducer = (state: TasksType, action: ActionType) => {
     switch (action.type) {
@@ -22,6 +24,8 @@ export const tasksReducer = (state: TasksType, action: ActionType) => {
             return {...state, [action.todolistID]: [newTask, ...state[action.todolistID]]}
         case "CHANGE-TASK-INPUT":
             return {...state, [action.todolistId]: state[action.todolistId].map(el => el.id === action.taskId ? {...el, inputValue: action.newInputText} : el)}
+        case "ADD-TODOLIST-HELPER":
+            return {...state, [action.todolistID]: []}
         default:
             return state
     }
@@ -36,3 +40,5 @@ export const addTaskAC = (todolistID: string, title: string) =>
     ({type: 'ADD-TASK', todolistID, title} as const);
 export const changeTaskInputValueAC = (todolistId: string, taskId: string, newInputText: string) =>
     ({type: 'CHANGE-TASK-INPUT', todolistId, taskId, newInputText} as const)
+export const addTodolistHelperAC = (todolistID: string) =>
+    ({type: 'ADD-TODOLIST-HELPER', todolistID} as const)

@@ -7,7 +7,8 @@ type AddTodolistACType = ReturnType<typeof addTodolistAC>
 type ChangeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>
 
 
-type ActionType = ChangeTodolistFilterACType | DeleteTodolistACType | AddTodolistACType | ChangeTodolistTitleACType
+type ActionType = ChangeTodolistFilterACType | DeleteTodolistACType |
+    AddTodolistACType | ChangeTodolistTitleACType;
 
 export const todolistsReducer = (state: TodolistsType[], action: ActionType) => {
     switch (action.type) {

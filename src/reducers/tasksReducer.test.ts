@@ -1,5 +1,12 @@
 import {v1} from "uuid";
-import {addTaskAC, changeStatusTaskAC, changeTaskInputValueAC, removeTaskAC, tasksReducer} from "./tasksReducer";
+import {
+    addTaskAC,
+    addTodolistHelperAC,
+    changeStatusTaskAC,
+    changeTaskInputValueAC,
+    removeTaskAC,
+    tasksReducer
+} from "./tasksReducer";
 
 test('delete task in current Todolist', () => {
     const todolistID1 = 'todolistID1'
@@ -77,4 +84,18 @@ test('changed task span to other name', () => {
     expect(endState[todolistID][0].inputValue).toBe(newTitle)
     expect(endState[todolistID][0].inputValue).not.toBe(startState[todolistID][0].inputValue)
     expect(endState[todolistID][1].inputValue).toBe('JS')
+})
+
+test('Added empty tasks for todolist', () => {
+
+    const todolistID = 'todolistID1';
+    const startState = {}
+
+    const endState = tasksReducer(startState, addTodolistHelperAC(todolistID))
+    // че с этим тестам делать?
+    expect(endState).toBe({
+        [todolistID]: []
+    })
+
+
 })

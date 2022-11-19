@@ -9,8 +9,8 @@ import {
 import {TodolistsType} from "../App";
 
 test('Changed todolist filter', () => {
-    let todolistID1 = v1();
-    let todolistID2 = v1();
+    const todolistID1 = v1();
+    const todolistID2 = v1();
     const newFilter = 'completed';
 
     const startState: TodolistsType[] = [
@@ -25,8 +25,8 @@ test('Changed todolist filter', () => {
 })
 
 test('Delete Todolist', () => {
-    let todolistID1 = v1();
-    let todolistID2 = v1();
+    const todolistID1 = v1();
+    const todolistID2 = v1();
 
     const startState: TodolistsType[] = [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
@@ -40,9 +40,9 @@ test('Delete Todolist', () => {
 })
 
 test('Added new Todolist', () => {
-    let todolistID1 = v1();
-    let todolistID2 = v1();
-    let newTodolist: TodolistsType = {id: v1(), title: 'newTitle', filter: 'all'};
+    const todolistID1 = v1();
+    const todolistID2 = v1();
+    const newTodolist: TodolistsType = {id: v1(), title: 'newTitle', filter: 'all'};
 
     const startState: TodolistsType[] = [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
@@ -51,12 +51,13 @@ test('Added new Todolist', () => {
     const endState = todolistsReducer(startState, addTodolistAC(newTodolist))
 
     expect(endState.length).toBe(3)
+    expect(endState[0]).toBe(newTodolist)
     expect(startState).not.toBe(endState)
 })
 
 test('Changed title of todolist' , () => {
-    let todolistID1 = v1();
-    let todolistID2 = v1();
+    const todolistID1 = v1();
+    const todolistID2 = v1();
     const newTitle = 'newTitle';
 
     const startState: TodolistsType[] = [

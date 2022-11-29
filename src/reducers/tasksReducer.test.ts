@@ -1,7 +1,6 @@
 import {v1} from "uuid";
 import {
     addTaskAC,
-    addTodolistHelperAC,
     changeStatusTaskAC,
     changeTaskInputValueAC,
     removeTaskAC,
@@ -86,16 +85,16 @@ test('changed task span to other name', () => {
     expect(endState[todolistID][1].inputValue).toBe('JS')
 })
 
-test('Added empty tasks for todolist', () => {
-
-    const todolistID = 'todolistID1';
-    const startState = {}
-
-    const endState = tasksReducer(startState, addTodolistHelperAC(todolistID))
-    // че с этим тестам делать?
-    expect(endState).toBe({
-        [todolistID]: []
-    })
-
-
-})
+// test('Added empty tasks for todolist', () => {
+//
+//     const todolistID = 'todolistID1';
+//     const startState = {}
+//
+//     const endState = tasksReducer(startState, addTodolistHelperAC(todolistID))
+//     // че с этим тестам делать?
+//     expect(endState).toBe({
+//         [todolistID]: []
+//     })
+//
+//
+// })

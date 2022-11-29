@@ -1,13 +1,12 @@
 import React, {useReducer} from 'react';
 import './App.css';
-import Todolist, { TaskType } from "./Components/Todolist";
+import Todolist, {TaskType} from "./Components/Todolist";
 import {v1} from "uuid";
 import AddItemForm from "./Components/AddItemForm";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
 import {
     addTaskAC,
-    addTodolistHelperAC,
     changeStatusTaskAC,
     changeTaskInputValueAC,
     removeTaskAC,
@@ -26,7 +25,7 @@ export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistsType = {
     id: string,
     title: string,
-    filter: FilterValuesType
+    filter: FilterValuesType;
 }
 
 
@@ -39,11 +38,11 @@ function App() {
     const todolistID1 = v1();
     const todolistID2 = v1();
 
-    const [todolists, todolistsDispatch] = useReducer(todolistsReducer,[
+    const [todolists, todolistsDispatch] = useReducer(todolistsReducer, [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'}
     ]);
-    const [tasks, tasksDispatch] = useReducer(tasksReducer,{
+    const [tasks, tasksDispatch] = useReducer(tasksReducer, {
         [todolistID1]: [
             {id: v1(), inputValue: "HTML&CSS", isDone: true},
             {id: v1(), inputValue: "JS", isDone: true},
@@ -58,18 +57,21 @@ function App() {
             {id: v1(), inputValue: "Rest API", isDone: false},
             {id: v1(), inputValue: "GraphQL", isDone: false},
         ]
-    } )
+    })
 
     //tasks Dispatch
     function removeTask(todolistID: string, id: string) {
         tasksDispatch(removeTaskAC(todolistID, id))
     }
+
     function changeStatusTask(todolistID: string, id: string, value: boolean) {
         tasksDispatch(changeStatusTaskAC(todolistID, id, value))
     }
+
     function addTask(todolistID: string, title: string) {
         tasksDispatch(addTaskAC(todolistID, title))
     }
+
     function changeTaskInput(todolistId: string, taskId: string, newInputText: string) {
         tasksDispatch(changeTaskInputValueAC(todolistId, taskId, newInputText))
     }
@@ -79,18 +81,19 @@ function App() {
     function changeTodolistFilter(todolistID: string, value: FilterValuesType) {
         todolistsDispatch(changeTodolistFilterAC(todolistID, value))
     }
+
     function deleteTodolist(todolistID: string) {
-            todolistsDispatch(deleteTodolistAC(todolistID));
-            delete tasks[todolistID]
-        // можно ли добавить этот делит в reducer
+        todolistsDispatch(deleteTodolistAC(todolistID));
+        tasksDispatch(deleteTodolistAC(todolistID))
     }
+
     function addTodolist(todolistTitle: string) {
-        let newTodolist: TodolistsType =  {id: v1(), title: todolistTitle, filter: 'all'};
-        todolistsDispatch(addTodolistAC(newTodolist))
-        tasksDispatch(addTodolistHelperAC(newTodolist.id))
+        todolistsDispatch(addTodolistAC(todolistTitle))
+        tasksDispatch(addTodolistAC(todolistTitle))
     }
+
     function changeTodolistTitle(todolistId: string, title: string) {
-       todolistsDispatch(changeTodolistTitleAC(todolistId, title))
+        todolistsDispatch(changeTodolistTitleAC(todolistId, title))
     }
 
 
@@ -106,10 +109,10 @@ function App() {
                         // почему не можем фильтровать напрямую tasks?
                         let tasksForTodolist = tasks[el.id];
                         if (el.filter === "active") {
-                            tasksForTodolist = tasks[el.id].filter( t => !t.isDone);
+                            tasksForTodolist = tasks[el.id].filter(t => !t.isDone);
                         }
                         if (el.filter === "completed") {
-                            tasksForTodolist = tasks[el.id].filter( t => t.isDone);
+                            tasksForTodolist = tasks[el.id].filter(t => t.isDone);
                         }
 
                         return (

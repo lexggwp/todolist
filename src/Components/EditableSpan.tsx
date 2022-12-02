@@ -3,7 +3,7 @@ import {TextField} from "@mui/material";
 
 type EditableSpanPropsType = {
     inputValue: string;
-    changeTaskInputValue: (inputValue: string) => void;
+    editTitle: (newTitle: string) => void;
 }
 
 const EditableSpan = (props: EditableSpanPropsType) => {
@@ -17,7 +17,7 @@ const EditableSpan = (props: EditableSpanPropsType) => {
     const toggleMode = () => {
         setEditView(!editView);
         if (editView && inputValue !== props.inputValue && inputValue.length) {
-            props.changeTaskInputValue(inputValue);
+            props.editTitle(inputValue);
         } else
             setInputValue(props.inputValue)
     }

@@ -1,106 +1,64 @@
 import {v1} from "uuid";
 import {
     addTaskAC,
-    changeStatusTaskAC,
-    changeTaskInputValueAC,
+    changeStatusTaskAC, editTaskTitleAC,
     removeTaskAC,
     tasksReducer
-} from "../reducers/tasksReducer";
-import {addTodolistAC} from "../reducers/todolistsReducer";
+} from "../redux/tasksReducer";
+import {addTodolistAC, deleteTodolistAC} from "../redux/todolistsReducer";
+import {TasksType} from "../App";
 
-test('delete task in current Todolist', () => {
-    const todolistID1 = 'todolistID1'
-    const startState = {
-        [todolistID1]: [
-            { taskID: v1(), title: "HTML&CSS", isDone: true },
-            { taskID: v1(), title: "JS", isDone: true },
-            { taskID: v1(), title: "ReactJS", isDone: false },
-            { taskID: v1(), title: "Rest API", isDone: false },
-            { taskID: '5', title: "GraphQL", isDone: false },
+let todolistID: string;
+let startState: TasksType;
+
+beforeEach( () => {
+    todolistID = v1();
+    startState = {
+        [todolistID]: [
+            { taskID: '1', title: "HTML&CSS", isDone: true },
+            { taskID: '2', title: "JS", isDone: true },
+            { taskID: '3', title: "ReactJS", isDone: false },
+            { taskID: '4', title: "Rest API", isDone: false },
+            { taskID: '5', title: "GraphQL", isDone: true },
         ]
-    };
-    const endState = tasksReducer(startState, removeTaskAC(todolistID1, '5'))
+    }
+})
 
-    expect(endState[todolistID1].length).toBe(4)
+test('delete task in Todolist', () => {
+    const endState = tasksReducer(startState, removeTaskAC(todolistID, '5'))
+    expect(endState[todolistID].length).toBe(4)
     expect(endState).not.toBe(startState)
 })
 
-test('change checkbox status task' , () => {
-    const todolistID = 'todolistID1';
-    const taskID = v1();
-    const startState = {
-        [todolistID]: [
-            { taskID: taskID, title: "HTML&CSS", isDone: true },
-            { taskID: v1(), title: "JS", isDone: true },
-            { taskID: v1(), title: "ReactJS", isDone: false },
-            { taskID: v1(), title: "Rest API", isDone: false },
-            { taskID: v1(), title: "GraphQL", isDone: false },
-        ]
-    };
-    const endState = tasksReducer(startState, changeStatusTaskAC(todolistID, taskID, false ))
-
-    expect(endState[todolistID][0].isDone).toBe(false);
+test('change checkbox status ' , () => {
+    const endState = tasksReducer(startState, changeStatusTaskAC(todolistID, '5', false ))
+    expect(endState[todolistID][4].isDone).toBe(false);
     expect(endState[todolistID][1].isDone).toBe( endState[todolistID][1].isDone);
 })
 
-test('added new task', () => {
-    const todolistID = 'todolistID1';
-    const taskID = v1();
-    const title = 'newTask'
-
-    const startState = {
-        [todolistID]: [
-            { taskID: taskID, title: "HTML&CSS", isDone: true },
-            { taskID: v1(), title: "JS", isDone: true },
-            { taskID: v1(), title: "ReactJS", isDone: false },
-            { taskID: v1(), title: "Rest API", isDone: false },
-            { taskID: v1(), title: "GraphQL", isDone: false },
-        ]
-    };
-
-    const endState = tasksReducer(startState, addTaskAC(todolistID, title))
-
+test('add new task', () => {
+    const endState = tasksReducer(startState, addTaskAC(todolistID, 'newTask'))
     expect(endState[todolistID].length).toBe(6);
-    expect(endState[todolistID][0].title).toBe(title);
+    expect(endState[todolistID][0].title).toBe('newTask');
 
 })
 
-test('changed task span to other name', () => {
-    const todolistID = 'todolistID1';
-    const taskID = v1();
-    const newTitle = 'newTask'
-
-    const startState = {
-        [todolistID]: [
-            { taskID: taskID, title: "HTML&CSS", isDone: true },
-            { taskID: v1(), title: "JS", isDone: true },
-            { taskID: v1(), title: "ReactJS", isDone: false },
-            { taskID: v1(), title: "Rest API", isDone: false },
-            { taskID: v1(), title: "GraphQL", isDone: false },
-        ]
-    };
-    const endState = tasksReducer(startState, changeTaskInputValueAC(todolistID, taskID, newTitle))
-
-    expect(endState[todolistID][0].title).toBe(newTitle)
-    expect(endState[todolistID][0].title).not.toBe(startState[todolistID][0].title)
+test('changed task span to other title', () => {
+    const endState = tasksReducer(startState, editTaskTitleAC(todolistID, '5', 'newInput'))
+    expect(endState[todolistID][4].title).toBe('newInput')
     expect(endState[todolistID][1].title).toBe('JS')
 })
 
 test('Added empty tasks for todolist', () => {
-
-    const startState = {
-        ['todolist1']: [
-            { taskID: v1(), title: "HTML&CSS", isDone: true },
-            { taskID: v1(), title: "JS", isDone: true },
-            { taskID: v1(), title: "ReactJS", isDone: false },
-            { taskID: v1(), title: "Rest API", isDone: false },
-            { taskID: v1(), title: "GraphQL", isDone: false },
-        ]
-    };
-
     const endState = tasksReducer(startState, addTodolistAC('title'))
     const keys = Object.keys(endState)
-
     expect(keys.length).toBe(2)
 
+})
+
+test('property with todolist was deleted', () => {
+    const endState = tasksReducer(startState, deleteTodolistAC(todolistID))
+    const keys = Object.keys(endState);
+    expect(keys.length).toBe(0);
+    expect(endState[todolistID]).toBeUndefined()
 })
